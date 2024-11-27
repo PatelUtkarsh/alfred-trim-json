@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.utkarsh.trim-json</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>9E38B0F4-0849-4092-B4CF-9C805F938020</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>EE3FED1D-8EB9-4C25-AD4D-2CBC06205E64</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F43D7C06-EADF-4D10-ADEB-8486E793C310</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9E38B0F4-0849-4092-B4CF-9C805F938020</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Utkarsh Patel</string>
+	<key>description</key>
+	<string>Trim json; takes input from clipboard</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Trim JSON</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>100</integer>
+				<key>script</key>
+				<string>&lt;?php
+// Get JSON input from the clipboard
+$json = trim(shell_exec('pbpaste'));
+
+// Function to trim JSON data
+function trim_json($data) {
+    $trimmed_data = [];
+    foreach ($data as $key =&gt; $value) {
+        if (is_array($value)) {
+            $trimmed_data[$key] = trim_json($value);
+        } else {
+            $trimmed_data[$key] = $value;
+        }
+    }
+    return $trimmed_data;
+}
+
+// Trim the JSON data
+$decoded_json = json_decode($json, true);
+if ($decoded_json) {
+    $trimmed_json = trim_json($decoded_json);
+    echo json_encode($trimmed_json);
+} else {
+    echo 'Invalid JSON input';
+}
+?&gt;</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>1</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>9E38B0F4-0849-4092-B4CF-9C805F938020</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>trimjson</string>
+				<key>subtext</key>
+				<string>Trim JSON</string>
+				<key>text</key>
+				<string>Trim JSON</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>F43D7C06-EADF-4D10-ADEB-8486E793C310</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>EE3FED1D-8EB9-4C25-AD4D-2CBC06205E64</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Trim JSON, Take input from clipboard and writes + copies trim version of the JSON.</string>
+	<key>uidata</key>
+	<dict>
+		<key>9E38B0F4-0849-4092-B4CF-9C805F938020</key>
+		<dict>
+			<key>xpos</key>
+			<real>235</real>
+			<key>ypos</key>
+			<real>210</real>
+		</dict>
+		<key>EE3FED1D-8EB9-4C25-AD4D-2CBC06205E64</key>
+		<dict>
+			<key>xpos</key>
+			<real>405</real>
+			<key>ypos</key>
+			<real>310</real>
+		</dict>
+		<key>F43D7C06-EADF-4D10-ADEB-8486E793C310</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>7</integer>
+			<key>note</key>
+			<string>Use keyword 'mergeclipboard' to start this workflow which merges the latest 3 items in the clipboard history with custom delimeters</string>
+			<key>xpos</key>
+			<real>50</real>
+			<key>ypos</key>
+			<real>290</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>1.0</string>
+	<key>webaddress</key>
+	<string>https://www.utkarshpatel.com</string>
+</dict>
+</plist>
